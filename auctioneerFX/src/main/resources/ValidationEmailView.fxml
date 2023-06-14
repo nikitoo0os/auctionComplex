@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vyatsu.auctionuni.my_task_prim_2.ProfileController">
+   <children>
+      <Label layoutX="171.0" layoutY="29.0" prefHeight="26.0" prefWidth="185.0" text="Подтверждение почты" textAlignment="CENTER">
+         <font>
+            <Font size="17.0" />
+         </font></Label>
+      <TextField fx:id="inputCode" layoutX="235.0" layoutY="187.0" prefHeight="26.0" prefWidth="130.0" promptText="Код подтверждения" />
+      <Button fx:id="confirmButton" defaultButton="true" layoutX="256.0" layoutY="226.0" mnemonicParsing="false" onAction="#secondStepConfirmEmail" text="Подтвердить" />
+      <Label layoutX="158.0" layoutY="135.0" text="На ваш email-адрес отправлен код-подтверждения" />
+   </children>
+</AnchorPane>

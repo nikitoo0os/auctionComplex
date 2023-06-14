@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="518.0" prefWidth="865.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vyatsu.auctionuni.my_task_prim_2.ManageAuctionItemController">
+
+    <children>
+        <Label layoutX="67.0" layoutY="21.0" minHeight="16" minWidth="69" prefHeight="22.0" prefWidth="319.0" text="Создание аукционного лота">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+
+      <Label layoutX="67.0" layoutY="72.0" text="Название аукциона" />
+      <Label layoutX="67.0" layoutY="146.0" text="Описание" />
+      <TextArea fx:id="descriptionItemInput" layoutX="67.0" layoutY="170.0" prefHeight="184.0" prefWidth="730.0" text="Описание аукционного лота" />
+      <TextField fx:id="titleItemInput" layoutX="67.0" layoutY="99.0" prefHeight="26.0" prefWidth="220.0" text="Название аукциона" />
+      <Label layoutX="307.0" layoutY="103.0" text="Объём инвестиций от" />
+      <TextField fx:id="volumeInvInput" layoutX="434.0" layoutY="98.0" prefHeight="26.0" prefWidth="89.0" text="500" />
+      <DatePicker fx:id="endDateItemInput" layoutX="164.0" layoutY="414.0" prefHeight="26.0" prefWidth="175.0" />
+      <Label layoutX="65.0" layoutY="419.0" text="Дата окончания" />
+      <Button fx:id="createItem" defaultButton="true" layoutX="67.0" layoutY="461.0" mnemonicParsing="false" onAction="#createAuctionItem" prefHeight="26.0" prefWidth="82.0" text="Создать" />
+      <Button fx:id="attach" defaultButton="true" layoutX="388.0" layoutY="414.0" mnemonicParsing="false" onAction="#showFileChooser" text="Прикрепить файлы" />
+      <Label layoutX="555.0" layoutY="103.0" text="Категория" />
+      <Button fx:id="cancelBtn" cancelButton="true" defaultButton="true" layoutX="156.0" layoutY="461.0" mnemonicParsing="false" onAction="#cancelButton" text="Отмена" />
+      <ComboBox fx:id="categoryCB" disable="true" layoutX="635.0" layoutY="98.0" prefHeight="26.0" prefWidth="162.0" />
+      <Label fx:id="labelFiles" layoutX="525.0" layoutY="403.0" prefHeight="46.0" prefWidth="271.0" wrapText="true" />
+      <Label layoutX="65.0" layoutY="374.0" text="Местоположение" />
+      <TextField fx:id="locationInput" layoutX="176.0" layoutY="370.0" prefHeight="25.0" prefWidth="623.0" />
+      <Label fx:id="warningLabel" layoutX="14.0" layoutY="496.0" prefHeight="17.0" prefWidth="201.0" textFill="RED" />
+      <TextField fx:id="searchCategoryInput" layoutX="635.0" layoutY="99.0" prefHeight="25.0" prefWidth="162.0" />
+
+    </children>
+</AnchorPane>

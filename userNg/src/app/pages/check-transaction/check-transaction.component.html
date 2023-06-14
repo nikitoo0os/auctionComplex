@@ -1,0 +1,32 @@
+<nz-card
+  [nzBordered]="true"
+  nzTitle="Ожидание перевода"
+  [nzExtra]="extraTemplate"
+  style="text-align: center"
+>
+  <nz-countdown [nzValue]="deadline" [nzTitle]="'Осталось'"></nz-countdown>
+  <ng-template #indicatorTemplate><span nz-icon nzType="loading"></span></ng-template>
+  <nz-spin nzSimple [nzIndicator]="indicatorTemplate"></nz-spin>
+  
+
+  <p style="margin-top: 1rem">
+    Адрес получателя-аукциониста:
+    <b nz-typography nzType="success"
+      ><kbd>EQDUndTgFo2xv_aqSEdR7TvhnquO3elnEmgZXA5HUHnuKG2F</kbd></b
+    >
+  </p>
+  <p>
+    Адрес отправителя:
+    <b nz-typography nzType="danger"
+      ><kbd>EQBAPQv7Yx9yHflg3pMcHUMeSjUTfP8XRFdUhauXjRX8vmUF</kbd></b
+    >
+  </p>
+
+  <br>
+  <br>
+  <span nz-typography nzType="secondary">Эта страница обновится автоматически</span>
+</nz-card>
+
+
+
+<ng-template #extraTemplate> </ng-template>

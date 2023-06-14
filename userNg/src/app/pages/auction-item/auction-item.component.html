@@ -1,0 +1,90 @@
+<nz-descriptions
+  nzTitle="Сведения об аукционном лоте"
+  nzBordered
+  nzLayout="vertical"
+>
+
+<nz-descriptions-item nzTitle="" [nzSpan]="2">
+  <ng-container *ngIf="status">
+    <nz-badge nzStatus="processing" nzText="Идёт аукцион"></nz-badge>
+  </ng-container>
+  <ng-container *ngIf="!status">
+    <nz-badge nzStatus="error" nzText="Аукцион завершен"></nz-badge>
+  </ng-container>
+</nz-descriptions-item>
+
+<nz-descriptions-item nzTitle="">
+  <nz-badge nzStatus="warning" nzText="№{{auctionItem.id}}"></nz-badge>
+</nz-descriptions-item>
+
+  <nz-descriptions-item nzTitle="Наименование лота"><b>{{auctionItem.title}}</b></nz-descriptions-item>
+  <nz-descriptions-item nzTitle="Начало аукциона"
+    ><b>{{auctionItem.startDate}}</b></nz-descriptions-item
+  >
+  <nz-descriptions-item nzTitle="Окончание аукциона"
+  ><b>{{auctionItem.endDate}}</b></nz-descriptions-item
+ >
+
+
+  <nz-descriptions-item nzTitle="Местонахождение" [nzSpan]="3"><b>{{auctionItem.location}}</b></nz-descriptions-item>
+  <nz-descriptions-item nzTitle="Завершение через">
+    <nz-countdown [nzValue]="deadline" [nzTitle]="''"></nz-countdown>
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="Минимальный объём инвестиций" [nzSpan]="2"
+    ><b>{{auctionItem.investmentSize}} TON</b></nz-descriptions-item
+  >
+  <nz-descriptions-item nzTitle="Описание" [nzSpan]="3">{{auctionItem.description}}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="Документы и сведения" [nzSpan]="3" *ngFor="let attachment of attachments"
+    ><a href="" (click)="downloadAttachmentById(attachment.id)">{{attachment.name}}.{{attachment.fileType}}</a> ({{attachment.fileSize}} Кб)</nz-descriptions-item
+  >
+</nz-descriptions>
+
+<button nz-button nzType="primary" style="margin-top: 1rem;" routerLink="/chat/{{auctionItem.id}}">Присоединиться к чату аукциона</button>
+
+<ng-container *ngIf="status">
+
+<div style="margin-top: 3rem; text-align: center; display: flex; flex-direction: column; justify-content: center; justify-items: center; align-items: center;">
+  <nz-descriptions nzTitle="Быстрая ставка"></nz-descriptions>
+  <form nz-form>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="12">Объём инвестиций в TON</nz-form-label>
+      <nz-form-control
+        [nzSpan]="12"
+        nzValidateStatus="validating"
+        nzHasFeedback
+        nzValidatingTip="Проверка, подождите..."
+      >
+        <input
+          nz-input
+          [ngModel]="''"
+          name="validating"
+        />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSpan]="12">Процент входа в компанию</nz-form-label>
+      <nz-form-control
+        [nzSpan]="12"
+        nzValidateStatus="validated"
+        nzHasFeedback
+        nzValidatingTip="I'm validating the content"
+      >
+        <input
+          nz-input
+          [ngModel]="''"
+          name="validating"
+        />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-control>
+        <button nz-button nzType="primary" routerLink="/checkTransaction">Сделать ставку</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>
+</ng-container>
+
+

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vyatsu.auctionuni.my_task_prim_2.AuthController">
+   <children>
+      <Label layoutX="251.0" layoutY="38.0" text="Регистрация">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="firstName" layoutX="205.0" layoutY="107.0" prefHeight="26.0" prefWidth="189.0" promptText="Имя" />
+      <TextField fx:id="secondName" layoutX="205.0" layoutY="146.0" prefHeight="26.0" prefWidth="190.0" promptText="Фамилия" />
+      <TextField fx:id="email" layoutX="205.0" layoutY="184.0" prefHeight="26.0" prefWidth="190.0" promptText="Электронная почта" />
+      <PasswordField fx:id="password" layoutX="204.0" layoutY="224.0" prefHeight="26.0" prefWidth="190.0" promptText="Пароль" />
+      <Button defaultButton="true" layoutX="257.0" layoutY="268.0" mnemonicParsing="false" onAction="#createUser" text="Регистрация" />
+      <Label fx:id="status" layoutX="204.0" layoutY="82.0" />
+   </children>
+</AnchorPane>

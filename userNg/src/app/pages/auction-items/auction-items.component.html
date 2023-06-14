@@ -1,0 +1,70 @@
+<div style="display: flex; justify-content: space-between">
+  <div style="display: flex; gap: 0.5rem; flex-wrap: wrap">
+    <nz-select
+      [(ngModel)]="selectedValue"
+      nzAllowClear
+      nzPlaceHolder="Категория сферы бизнеса"
+      [nzOptions]="listOfGroupOption"
+    ></nz-select>
+    <nz-select
+      [(ngModel)]="selectedValue"
+      nzAllowClear
+      nzPlaceHolder="Суммарный объём инвестиций"
+      [nzOptions]="listOfGroupOption"
+    ></nz-select>
+    <nz-select
+      [(ngModel)]="selectedValue"
+      nzAllowClear
+      nzPlaceHolder="Дата добавления"
+      [nzOptions]="listOfGroupOption"
+    ></nz-select>
+  </div>
+
+  <div style="width: 300px">
+    <nz-input-group
+      nzSearch
+      [nzAddOnAfter]="suffixIconButton"
+      class="input-search"
+    >
+      <input type="text" nz-input placeholder="Поиск по аукционисту" />
+    </nz-input-group>
+    <ng-template #suffixIconButton>
+      <button nz-button nzType="primary" nzSearch>
+        <span nz-icon nzType="search"></span>
+      </button>
+    </ng-template>
+  </div>
+</div>
+
+<nz-card style="margin-top: 1rem;" *ngFor="let auctionItem of listOfAuctionItem">
+  <div class="wrap" style="display: flex; justify-content: space-between; align-items: center">
+    <div>
+      <div style="display: flex; justify-content: space-between; gap: 1rem">
+        <img alt="example" style="width: 300px" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
+
+        <ng-container>
+          <nz-card>
+            <div nz-row [nzGutter]="8">
+              <div nz-col [nzSpan]="10" style="width: 200px">
+                <nz-card nzTitle="Процент входа" nzSize="small">
+                  <p>{{ auctionItem.entryPercentage }}</p>
+                </nz-card>
+              </div>
+              <div nz-col [nzSpan]="14">
+                <nz-card nzTitle="Объём инвестиций" nzSize="small">
+                  <p>{{ auctionItem.investmentSize }} TON</p>
+                </nz-card>
+              </div>
+            </div>
+            <nz-button-group style="display: flex; gap:1rem; margin-top: 1rem">
+              <button nz-button routerLink="/chat/{{auctionItem.id}}">Перейти к чату</button>
+              <button nz-button routerLink="/item/{{auctionItem.id}}" nzType="link">Подробнее</button>
+            </nz-button-group>
+          </nz-card>
+        </ng-container>
+      </div>
+
+      <nz-card-meta style="margin-top: 1rem" nzTitle="{{auctionItem.title}}" nzDescription="{{auctionItem.description}}"></nz-card-meta>
+    </div>
+  </div>
+</nz-card>

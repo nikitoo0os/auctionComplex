@@ -1,0 +1,55 @@
+<div style="display: flex; justify-content: center; margin-top: 2rem;">
+  <div>
+    <form
+      nz-form
+      [formGroup]="validateForm"
+      class="login-form"
+      (ngSubmit)="submitForm()"
+    >
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Пожалуйста введите ваше имя пользователя!">
+          <nz-input-group nzPrefixIcon="user">
+            <input
+              type="text"
+              nz-input
+              formControlName="usernameOrEmail"
+              placeholder="Имя пользователя или email"
+            />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Пожалуйста введите ваш пароль!">
+          <nz-input-group nzPrefixIcon="lock">
+            <input
+              type="password"
+              nz-input
+              formControlName="password"
+              placeholder="Пароль"
+            />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <div nz-row class="login-form-margin">
+        <div nz-col [nzSpan]="12">
+          <label nz-checkbox formControlName="">
+            <span>Запомнить меня</span>
+          </label>
+        </div>
+        <div nz-col [nzSpan]="12">
+          <a class="login-form-forgot">Забыл пароль</a>
+        </div>
+      </div>
+      <button
+        nz-button
+        class="login-form-button login-form-margin"
+        [nzType]="'primary'"
+        routerLink="/confirmEmail"
+      >
+        Войти
+      </button>
+      Или
+      <a routerLink="/register">зарегистрироваться</a>
+    </form>
+  </div>
+</div>

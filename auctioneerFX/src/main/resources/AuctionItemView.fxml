@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="746.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vyatsu.auctionuni.my_task_prim_2.AuctionItemController">
+   <children>
+      <Label layoutX="20.0" layoutY="65.0" text="Название:" />
+      <TextArea fx:id="description" layoutX="20.0" layoutY="245.0" prefHeight="168.0" prefWidth="560.0" promptText="Описание" text="Мы – это коллектив единомышленников, мы заряжены на результат и выстраиваем свою работу так, чтобы получать удовольствие от процесса, а свободное время тратим на саморазвитие, на отдых коллективом и с близкими нам людьми.Никто кроме нас не ставит нам задачи по оптимизации работ, поиску новых стандартов работ или контроля качества. Мы рассчитываем, что высокие внутренние требования к себе дадут Вам удовлетворение, а главное уверенность в результате работ.Цифры сами по себе ничего не значат, однако с 2007 года выполнено 130 объектов по вдавливанию свай и более 280 различных объектов по испытанию грунтов и свай. Нами задавлено 400 000 погонных метров свай, это более 50 000 свай. Выполнено 1 200 различных испытаний свай и более 400 штамповых испытаний проведено." wrapText="true" />
+      <Label fx:id="idItem" layoutX="22.0" layoutY="22.0" text="Лот №1234567">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
+      <Label layoutX="19.0" layoutY="101.0" prefHeight="17.0" prefWidth="267.0" text="Объём инвестиций от                                 TON" />
+      <Label layoutX="21.0" layoutY="132.0" prefHeight="18.0" prefWidth="330.0" text="Дата и время окончания аукциона: " />
+      <Label layoutX="21.0" layoutY="170.0" text="Категория: " />
+      <TextField fx:id="volumeInvestment" layoutX="149.0" layoutY="94.0" prefHeight="26.0" prefWidth="98.0" />
+      <Button defaultButton="true" layoutX="420.0" layoutY="653.0" mnemonicParsing="false" onAction="#createAuctionList" text="Создать аукционный лист" />
+      <ComboBox fx:id="category" layoutX="93.0" layoutY="166.0" prefWidth="150.0" promptText="" />
+      <DatePicker fx:id="endDate" layoutX="224.0" layoutY="128.0" prefHeight="18.0" prefWidth="166.0" promptText="24.06.23 11:00(МСК+2)" />
+      <TextField fx:id="title" layoutX="83.0" layoutY="61.0" prefHeight="25.0" prefWidth="313.0" text="Монтаж свай" />
+      <Label layoutX="21.0" layoutY="220.0" text="Сведения о лоте">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="22.0" layoutY="442.0" text="Местонахождение" />
+      <TextField fx:id="location" layoutX="140.0" layoutY="437.0" prefHeight="26.0" prefWidth="439.0" text="г. Иркутск, ул. Пискунова, д. 147/1" />
+      <Label layoutX="20.0" layoutY="482.0" text="Документы и сведения">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Button defaultButton="true" layoutX="21.0" layoutY="699.0" mnemonicParsing="false" onAction="#updateAuctionItem" text="Сохранить изменения" />
+      <Button cancelButton="true" defaultButton="true" layoutX="170.0" layoutY="699.0" mnemonicParsing="false" text="Отмена" />
+      <Button defaultButton="true" layoutX="19.0" layoutY="653.0" mnemonicParsing="false" text="Добавить файлы" />
+      <Button fx:id="deleteBtn" defaultButton="true" layoutX="470.0" layoutY="699.0" mnemonicParsing="false" onAction="#deleteAuctionItem" text="Удалить аукцион" />
+      <Label fx:id="status" layoutX="243.0" layoutY="704.0" text="Изменения зафиксированы!">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tableAttachments" layoutX="20.0" layoutY="502.0" prefHeight="143.0" prefWidth="560.0">
+        <columns>
+          <TableColumn fx:id="idCol" prefWidth="53.0" text="№" />
+           <TableColumn fx:id="nameCol" prefWidth="124.0" text="Название" />
+          <TableColumn fx:id="keyCol" prefWidth="63.0" text="Ключ" />
+           <TableColumn fx:id="sizeCol" prefWidth="87.0" text="Размер(байт)" />
+           <TableColumn fx:id="typeCol" prefWidth="82.0" text="Тип" />
+           <TableColumn fx:id="timestampCol" prefWidth="146.0" text="Загружено" />
+        </columns>
+      </TableView>
+      <Button fx:id="deleteFileBtn" defaultButton="true" disable="true" layoutX="133.0" layoutY="653.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Удалить файл" />
+   </children>
+</AnchorPane>

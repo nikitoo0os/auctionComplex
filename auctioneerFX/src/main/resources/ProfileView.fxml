@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="425.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vyatsu.auctionuni.my_task_prim_2.ProfileController">
+   <children>
+      <Label fx:id="labelProfileUser" layoutX="23.0" layoutY="26.0" text="Пользователь-Аукционист №123123">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <TextField fx:id="firstName" layoutX="40.0" layoutY="138.0" prefHeight="26.0" prefWidth="202.0" />
+      <Label layoutX="40.0" layoutY="120.0" text="Имя" />
+      <Label layoutX="38.0" layoutY="70.0" text="Фамилия" />
+      <TextField fx:id="secondName" layoutX="40.0" layoutY="88.0" prefHeight="26.0" prefWidth="201.0" />
+      <TextField fx:id="email" layoutX="337.0" layoutY="97.0" prefHeight="26.0" prefWidth="202.0" />
+      <Label layoutX="337.0" layoutY="78.0" prefWidth="107.0" text="Электронная почта" />
+      <Label layoutX="40.0" layoutY="177.0" text="Имя пользователя" />
+      <TextField fx:id="username" layoutX="40.0" layoutY="195.0" prefHeight="26.0" prefWidth="202.0" />
+      <Button defaultButton="true" layoutX="103.0" layoutY="237.0" mnemonicParsing="false" onAction="#saveUser" text="Сохранить" />
+      <Button defaultButton="true" layoutX="385.0" layoutY="335.0" mnemonicParsing="false" onAction="#changePassword" text="Сменить пароль" />
+      <Label layoutX="337.0" layoutY="185.0" text="Старый пароль" />
+      <TextField fx:id="oldPassword" layoutX="335.0" layoutY="204.0" prefHeight="26.0" prefWidth="202.0" />
+      <TextField fx:id="newPassword" layoutX="335.0" layoutY="250.0" prefHeight="26.0" prefWidth="202.0" />
+      <TextField fx:id="confirmNewPassword" layoutX="335.0" layoutY="302.0" prefHeight="26.0" prefWidth="202.0" />
+      <Label layoutX="335.0" layoutY="233.0" text="Новый пароль" />
+      <Label layoutX="335.0" layoutY="283.0" text="Новый пароль" />
+      <Button fx:id="confirmEmailBtn" defaultButton="true" layoutX="337.0" layoutY="129.0" mnemonicParsing="false" onAction="#confirmEmail" text="Подтвердить почту" />
+   </children>
+</AnchorPane>

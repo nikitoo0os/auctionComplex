@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="272.0" prefWidth="408.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vyatsu.auctionuni.ex_1.MyController">
+   <children>
+      <Button fx:id="myButton" layoutX="153.0" layoutY="142.0" mnemonicParsing="false" onAction="#showDateTime" text="Show Date Time" />
+      <TextField fx:id="myTextField" layoutX="134.0" layoutY="100.0" prefHeight="26.0" prefWidth="139.0" />
+   </children>
+</AnchorPane>

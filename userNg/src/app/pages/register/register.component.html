@@ -1,0 +1,101 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>Фамилия</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input nz-input id="secondName" formControlName="secondName" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>Имя</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input nz-input id="firstName" formControlName="firstName"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="email"
+      >Электронная почта</nz-form-label
+    >
+    <nz-form-control
+      [nzSm]="14"
+      [nzXs]="24"
+      nzErrorTip="Электронная почта некорректна"
+    >
+      <input nz-input formControlName="email" id="email" formControlName="email"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="password" nzRequired
+      >Пароль</nz-form-label
+    >
+    <nz-form-control
+      [nzSm]="14"
+      [nzXs]="24"
+      nzErrorTip="Пожалуйста введите пароль"
+    >
+      <input
+        nz-input
+        type="password"
+        id="password"
+        formControlName="password"
+        (ngModelChange)="updateConfirmValidator()"
+      />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="checkPassword" nzRequired
+      >Подтверждение пароля</nz-form-label
+    >
+    <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="errorTpl">
+      <input
+        nz-input
+        type="password"
+        formControlName="checkPassword"
+        id="checkPassword"
+      />
+      <ng-template #errorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')"
+          >Пожалуйста подтвердите пароль</ng-container
+        >
+        <ng-container *ngIf="control.hasError('confirm')">
+          Пароли не совпадают!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label
+      [nzSm]="8"
+      [nzXs]="24"
+      nzFor="nickname"
+      nzTooltipTitle="Если не задать, то имя пользователя будет электронная почта"
+    >
+      <span>Имя пользователя</span>
+    </nz-form-label>
+    <nz-form-control
+      [nzSm]="14"
+      [nzXs]="24"
+      nzErrorTip="Пожалуйста введите имя пользователя"
+    >
+      <input nz-input id="nickname" formControlName="username" />
+    </nz-form-control>
+  </nz-form-item>
+
+
+  <nz-form-item nz-row class="register-area" >
+    <nz-form-control [nzSpan]="14" [nzOffset]="8">
+      <label nz-checkbox formControlName="agree">
+        <span>
+          Я ознакомился с
+          <a>соглашением</a>
+        </span>
+      </label>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-row class="register-area">
+    <nz-form-control [nzSpan]="14" [nzOffset]="8">
+      <button nz-button nzType="primary" (click) = "registerBtn">Зарегистрироваться</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>

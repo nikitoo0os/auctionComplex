@@ -1,0 +1,33 @@
+<div style="display: flex; justify-content: center; margin-top: 2rem;">
+    <div>
+      <form
+        nz-form
+        [formGroup]="validateForm"
+        class="confirm-email-form"
+        (ngSubmit)="submitForm()"
+        style="display: flex; flex-direction:column; justify-content: center;"
+      >
+      <nz-page-header-title>Двухфакторная аутентификация</nz-page-header-title>
+        <nz-form-item style="margin-top: 3rem;">
+          <nz-form-control nzErrorTip="Пожалуйста введите код подтверждения с почты">
+            <nz-input-group nzPrefixIcon="lock">
+              <input
+                type="text"
+                nz-input
+                formControlName="confirmCode"
+                placeholder="Код подтверждения"
+              />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <button
+          nz-button
+          [nzType]="'primary'"
+        >
+          Подтвердить
+        </button>
+      </form>
+    </div>
+  </div>
+  

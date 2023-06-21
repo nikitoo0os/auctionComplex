@@ -22,4 +22,18 @@ export class BidService {
         });
     });
   }
+
+  getBestBidByAuctionItemId(id: number): Promise<any> {
+    return new Promise((resolve, reject) => {     
+      axios
+        .post(`${this.baseUrl}/bid/best`, {'id': id})
+        .then((res) => {
+          resolve(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+          reject(err);
+        });
+    });
+  }
 }

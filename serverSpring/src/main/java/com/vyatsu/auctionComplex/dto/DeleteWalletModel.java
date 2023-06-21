@@ -3,16 +3,13 @@ package com.vyatsu.auctionComplex.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-public class MessageModel {
+public class DeleteWalletModel {
 
     @Getter
     @Setter
-    private int userId;
-    @Getter
-    @Setter
-    private int auctionChatId;
+    private Long id;
 
     @Getter
     @Setter
-    private String text;
+    private String token;
 }

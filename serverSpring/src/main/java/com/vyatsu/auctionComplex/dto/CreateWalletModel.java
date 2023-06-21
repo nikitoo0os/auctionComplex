@@ -3,16 +3,18 @@ package com.vyatsu.auctionComplex.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-public class MessageModel {
+public class CreateWalletModel {
 
     @Getter
     @Setter
-    private int userId;
-    @Getter
-    @Setter
-    private int auctionChatId;
+    private String token;
 
     @Getter
     @Setter
-    private String text;
+    private String address;
+
+    @Getter
+    @Setter
+    private int confirmCode;
+
 }

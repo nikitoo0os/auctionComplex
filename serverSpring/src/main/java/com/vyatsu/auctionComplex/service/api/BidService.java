@@ -7,5 +7,6 @@ import java.util.List;
 public interface BidService {
     List<Bid> getBidsByAuctionItemId(Long id);
 
-    Bid getBestBidByAuctionItemId(Long id);
+    List<Bid> getBestBidByAuctionItemId(Long id);
+
 }

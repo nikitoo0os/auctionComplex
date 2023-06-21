@@ -1,5 +1,6 @@
 package com.vyatsu.auctionComplex.controller.api;
 
+import com.vyatsu.auctionComplex.dto.FilterModel;
 import com.vyatsu.auctionComplex.dto.UserModel;
 import com.vyatsu.auctionComplex.entity.api.Attachment;
 import com.vyatsu.auctionComplex.entity.api.AuctionItem;
@@ -50,6 +51,20 @@ public class AuctionItemController {
         LOGGER.info("get auction items by auctioneer #" + model.getId());
         List<AuctionItem> auctionItems = auctionItemService.getAuctionItemsByAuctioneer(model.getId());
         return new ResponseEntity<>(auctionItems, HttpStatus.OK);
+    }
+
+    @PostMapping("/categories")
+    private ResponseEntity<List<String>> getAllCategories(){
+        LOGGER.info("get all categories");
+        List<String> categories = auctionItemService.getAllCategories();
+        return new ResponseEntity<>(categories, HttpStatus.OK);
+    }
+
+    @PostMapping("/filter")
+    private ResponseEntity<List<AuctionItem>> getFilterAuctionItems(@RequestBody FilterModel model){
+        LOGGER.info("get filter items");
+        List<AuctionItem> filterAuctionItems = auctionItemService.getFilterAuctionItems(model.getInvestmentVolume(), model.getTime(), model.getCategory());
+        return new ResponseEntity<>(filterAuctionItems, HttpStatus.OK);
     }
 
 }

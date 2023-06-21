@@ -17,7 +17,7 @@ public class BidListFromChatModel {
 
     @Getter
     @Setter
-    private Integer entryPercentage;
+    private Double entryPercentage;
 
     @Getter
     @Setter

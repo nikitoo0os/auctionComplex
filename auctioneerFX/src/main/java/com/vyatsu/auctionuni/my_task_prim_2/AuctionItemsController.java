@@ -75,10 +75,10 @@ public class AuctionItemsController implements Initializable {
 
     private AuctionItem selectedItem;
     private User authUser;
+    private boolean isEnabledEvent;
     @FXML
     private void handleButtonAction(ActionEvent event){
-        tableAuctionItems.setItems(auctionItemsData);
-        fillContent(this.auctionItemsData);
+        initData();
     }
 
     @Override
@@ -95,6 +95,12 @@ public class AuctionItemsController implements Initializable {
         observableCategories.add("");
         observableCategories.addAll(categories);
 
+        initData();
+
+        categoryCB.setItems(observableCategories);
+    }
+
+    private void initData(){
         if(this.authUser == null){
             tableAuctionItems.setPlaceholder(new Label("Авторизуйтесь для отображения аукционов"));
         }
@@ -102,8 +108,6 @@ public class AuctionItemsController implements Initializable {
             tableAuctionItems.setPlaceholder(new Label("Нет данных для отображения. Создайте свой первый аукцион!"));
             fillContent(baseController.getAuctionItemsByAuctioneer(authUser));
         }
-
-        categoryCB.setItems(observableCategories);
     }
 //    @FXML
 //    public void handleAuthAction(ActionEvent event) throws IOException {
@@ -156,7 +160,7 @@ public class AuctionItemsController implements Initializable {
 
         Stage stage = new Stage();
         Scene scene = new Scene(new Group());
-        stage.setTitle("Авторизация");
+        stage.setTitle("Создание аукционного лота");
         Parent pane = null;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/NewItemView.fxml"));
@@ -196,6 +200,7 @@ public class AuctionItemsController implements Initializable {
         fillContent(this.auctionItemsData);
     }
     public void fillContent(ObservableList<AuctionItem> auctionItemObservableList){
+        tableAuctionItems.getItems().clear();
         if(this.authUser == null){
             this.auctionItemsData = baseController.GetAllAuctionItem();
             createItem.setDisable(true);
@@ -222,6 +227,14 @@ public class AuctionItemsController implements Initializable {
         startDateCol.setCellValueFactory(new PropertyValueFactory<AuctionItem, LocalDate>("startDate"));
         endDateCol.setCellValueFactory(new PropertyValueFactory<AuctionItem, LocalDate>("endDate"));
 
+
+
+
+        tableAuctionItems.setItems(auctionItemObservableList);
+        setEventClickMouse();
+    }
+
+    private void setEventClickMouse(){
         tableAuctionItems.setOnMousePressed(mouseEvent -> {
             if (mouseEvent.isPrimaryButtonDown() && mouseEvent.getClickCount() == 2) {
                 int selectedId = tableAuctionItems.getSelectionModel().getSelectedItem().getId();
@@ -250,7 +263,8 @@ public class AuctionItemsController implements Initializable {
                 }
             }
         });
-        tableAuctionItems.setItems(auctionItemObservableList);
+
+        isEnabledEvent = true;
     }
 
     public void showFileChooser(ActionEvent event) throws URISyntaxException {

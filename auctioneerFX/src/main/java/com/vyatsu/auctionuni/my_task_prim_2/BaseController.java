@@ -565,7 +565,6 @@ public class BaseController {
         chatMessage.setUser(user);
         chatMessage.setText(text);
 
-
         chatMessage.setAttachment(createAttachment(file));
 
         try{
@@ -642,7 +641,9 @@ public class BaseController {
             System.out.println(ps.getMetaData());
             ps.executeUpdate();
 
-            System.out.println("Прикрепленный файл: " + attachment);
+            attachment = getAttachment(attachment);
+            System.out.println("Прикрепленный файл: " + attachment.getId());
+
 
             return attachment;
         }
@@ -666,24 +667,38 @@ public class BaseController {
     }
 
     public boolean deleteAuctionItem(AuctionItem auctionItem) {
-        try{
+        try {
             DriverManager.registerDriver(new JDBC());
             Connection con = DriverManager.getConnection(MyTaskPrim2JavaFX.connectionString);
-            PreparedStatement ps = con.prepareStatement("delete from auction_items where id = ?");
-            ps.setLong(1, auctionItem.getId());
-            ps.executeUpdate();
+            PreparedStatement psBids = con.prepareStatement("DELETE FROM bids WHERE auction_item_id = ?");
+            psBids.setLong(1, auctionItem.getId());
+            psBids.executeUpdate();
+
+            PreparedStatement psChatMessages = con.prepareStatement("DELETE FROM chat_messages WHERE chat_id IN (SELECT id FROM auction_chats WHERE auction_id = ?)");
+            psChatMessages.setLong(1, auctionItem.getId());
+            psChatMessages.executeUpdate();
+
+            PreparedStatement psAuctionChats = con.prepareStatement("DELETE FROM auction_chats WHERE auction_id = ?");
+            psAuctionChats.setLong(1, auctionItem.getId());
+            psAuctionChats.executeUpdate();
+
+            PreparedStatement psAuctionItems = con.prepareStatement("DELETE FROM auction_items WHERE id = ?");
+            psAuctionItems.setLong(1, auctionItem.getId());
+            psAuctionItems.executeUpdate();
+
             return true;
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
 
+
     public void updateAuctionItem(AuctionItem auctionItem) {
         try{
             DriverManager.registerDriver(new JDBC());
             Connection con = DriverManager.getConnection(MyTaskPrim2JavaFX.connectionString);
-            PreparedStatement ps = con.prepareStatement("update auction_items set title = ?, description = ?, investment_size = ?, end_date = ?, location = ? where id = ?;");
+            PreparedStatement ps = con.prepareStatement("update auction_items set title = ?, description = ?, investment_size = ?, end_date = ?, location = ?, category = ? where id = ?;");
             ps.setString(1, auctionItem.getTitle());
             ps.setString(2, auctionItem.getDescription());
             ps.setDouble(3, auctionItem.getInvestmentSize());
@@ -695,11 +710,12 @@ public class BaseController {
             }
 
             ps.setString(5, auctionItem.getLocation());
+            ps.setString(6, auctionItem.getCategory());
 
-            ps.setLong(6, auctionItem.getId());
+            ps.setLong(7, auctionItem.getId());
             ps.executeUpdate();
 
-        }catch (SQLException e){
+        } catch (SQLException e){
             e.printStackTrace();
         }
     }
@@ -869,7 +885,7 @@ public class BaseController {
         }
         return null;
     }
-    public Bid getBestOfferByBidList(int auction_id) {
+    public Bid getBestOfferByBidList(int auction_id) {  
         try {
             DriverManager.registerDriver(new JDBC());
             Connection con = DriverManager.getConnection(MyTaskPrim2JavaFX.connectionString);

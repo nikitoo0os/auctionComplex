@@ -31,7 +31,7 @@ namespace auctionComplex.Services
                     AuctionChat auctionChat = new AuctionChat
                     {
                         Id = (int)row["id"],
-                        AuctionItemId = (int)row["AuctionItemId"] 
+                        AuctionItemId = (int)row["auction_id"] 
                     };
 
                     auctionChats.Add(auctionChat);
@@ -62,7 +62,7 @@ namespace auctionComplex.Services
                     AuctionChat auctionChat = new AuctionChat
                     {
                         Id = (int)row["id"],
-                        AuctionItemId = (int)row["AuctionItemId"]
+                        AuctionItemId = (int)row["auction_id"]
                     };
 
                     return auctionChat;

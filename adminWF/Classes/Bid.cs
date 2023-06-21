@@ -15,16 +15,18 @@ namespace auctionComplex.Classes
         public double InvestmentVolume { get; set; }
 
         [Column("entry_percentage")]
-        public int EntryPercentage { get; set; }
+        public double EntryPercentage { get; set; }
 
         [Column("timestamp")]
         public DateTime Timestamp { get; set; }
 
-        [Column("user_id")]
         public User User { get; set; }
+        [Column("user_id")]
+        public int UserId { get; set; }
 
-        [Column("auction_id")]
+        
         public AuctionItem AuctionItem{ get; set; }
-
+        [Column("auction_item_id")]
+        public int AuctionItemId { get; set; }
     }
 }

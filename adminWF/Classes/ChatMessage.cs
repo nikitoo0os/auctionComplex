@@ -15,15 +15,16 @@ namespace auctionComplex.Classes
         public string Text { get; set; }
 
         public AuctionChat AuctionChat { get; set; }
-        [Column("AuctionChatId")]
+        [Column("chat_id")]
         public int AuctionChatId { get; set; }
 
         public User User { get; set; }
-        [Column("UserId")]
+        
+        [Column("user_id")]
         public int UserId { get; set; }
 
         public Attachment Attachment { get; set; }
-        [Column("AttachmentId")]
+        [Column("attachment_id")]
         public int AttachmentId { get; set; }
 
         [Column("timestamp")]

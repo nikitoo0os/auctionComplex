@@ -11,8 +11,8 @@ export class WalletService {
   public userData$: any;
   constructor() {}
 
-  getWalletByUserId(userId: number): Promise<any>{
-    return new Promise((resolve, reject) => {     
+  getWalletByUserId(userId: number): Promise<any> {
+    return new Promise((resolve, reject) => {
       axios
         .get(`${this.baseUrl}/wallet/user/${userId}`)
         .then((res) => {
@@ -24,5 +24,54 @@ export class WalletService {
           reject(err);
         });
     });
-}
+  }
+
+  createConfirmCode(){
+    const token = localStorage.getItem('token');
+    return new Promise((resolve, reject) => {
+      axios
+        .post(`${this.baseUrl}/wallet/user/new/code`, token)
+        .then((res) => {
+          console.log(res);
+          resolve(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+          reject(err);
+        });
+    });
+  }
+
+  createWalletByAddressAndUserId(formData: any){
+    console.log(formData);
+    return new Promise((resolve, reject) => {
+      axios
+        .post(`${this.baseUrl}/wallet/user/new`, formData)
+        .then((res) => {
+          console.log(res);
+          resolve(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+          reject(err);
+        });
+    });
+  }
+
+  dropWalletByIdWallet(data: any){
+    console.log(data);
+    return new Promise((resolve, reject) => {
+      axios
+        .post(`${this.baseUrl}/wallet/user/drop`, data)
+        .then((res) => {
+          console.log(res);
+          resolve(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+          reject(err);
+        });
+    });
+  }
+
 }

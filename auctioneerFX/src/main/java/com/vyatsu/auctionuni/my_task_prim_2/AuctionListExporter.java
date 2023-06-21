@@ -19,6 +19,7 @@ public class AuctionListExporter {
 
         Stage stage = new Stage();
         FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialFileName("auction_list_"+auctionItem.getId()+".xls");
         fileChooser.setTitle("Save File");
         File file = fileChooser.showSaveDialog(stage);
         if (file != null) {

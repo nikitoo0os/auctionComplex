@@ -11,6 +11,7 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 import { AuctionChatService } from 'src/app/services/api/auction-chat.service';
 import { UserService } from 'src/app/services/api/user.service';
 import { WalletService } from 'src/app/services/api/wallet.service';
+import { AuctionItemService } from 'src/app/services/api/auction-item.service';
 
 interface DataBid {
   id: number;
@@ -49,11 +50,15 @@ export class AuctionChatComponent implements OnInit {
   private stompClient: any;
   userWallet: any;
   private updateValidatorSubject = new Subject<void>();
+  auctionItem: any;
+  status!: boolean;
+  warningMessageEntryPercentage: any;
 
   
   constructor(
     private fb: UntypedFormBuilder,
     private auctionChatService: AuctionChatService,
+    private auctionItemService: AuctionItemService,
     private bidService: BidService,
     private userService: UserService,
     private walletService: WalletService,
@@ -74,30 +79,54 @@ export class AuctionChatComponent implements OnInit {
   bidForm!: UntypedFormGroup;
   statusValidate: string = "";
 
-  itemId!: string | null;
+  itemId!: any;
   auctionChat!: auctionChatData;
-  chatMessages: chatMessageData[] = [];
+  chatMessages!: any[];
   private chatMessage!: chatMessageData;
   messages: any[] = [];
   inputMessage!: string;
   bids: DataBid[] = [];
+  bestBid: any;
+  userBestBid: any;
   receivedMessages: string[] = [];
-  userId: number = 3;
   user!: any;
 
-  investmentVolume!: number | null;
+  investmentVolume: number | string = '';
   entryPercentage!: number | null;
+
+  warningMessage: any;
 
   ngOnInit(): void {
     this.itemId = this.route.snapshot.paramMap.get('id');
     console.log('Item ID:', this.itemId);
+    this.auctionItemService.getAuctionItemById(this.itemId).then((data) => {
+      console.log('ЛОТ', data);
+      this.auctionItem = data;
+      if(this.auctionItem.isValid != 'completed'){
+        this.status = true;
+      }
+      else{
+        this.status = false;
+      }
+    })
+
+    this.auctionChatService
+    .getChatMessagesByAuctionId(Number(this.itemId))
+    .then((res) => {
+      console.log('ПОЛУЧЕНЫ СООБЩЕНИЯ ИЗ БД', res[0].reverse());
+      this.chatMessages = res[0].reverse();
+      console.log(this.chatMessages[0]);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 
     console.log("USER:::");
-    this.userService.getUserById(this.userId).then((data) => {
+    const token = localStorage.getItem('token');
+    this.userService.getUserByToken(token).then((data: any) => {
       this.user = data;
-      console.log(data);
+      console.log('ПОЛЬЗВОАЕТЛТЬ', this.user);
     });
-    
 
     this.webSocketService.connectChat(this.itemId!).subscribe((data) => {
       this.messages = data;
@@ -115,25 +144,27 @@ export class AuctionChatComponent implements OnInit {
         console.log(err);
       });
 
-    this.auctionChatService
-      .getChatMessagesByAuctionId(Number(this.itemId))
+    this.bidService
+      .getBidsByAuctionItemId(Number(this.itemId))
       .then((res) => {
         console.log(res);
-        this.chatMessages = res.data;
+        this.bids = res;
+        console.log('ВСЕ СТАВКИ АУКЦИОНА: ' , this.bids);
       })
       .catch((err) => {
         console.log(err);
       });
 
-    this.bidService
-      .getBidsByAuctionItemId(Number(this.itemId))
+      this.bidService
+      .getBestBidByAuctionItemId(Number(this.itemId))
       .then((res) => {
-        console.log(res);
-        this.bids = res.data;
+        console.log('ЛУЧШАЯ СТАВКА' , res);
+        this.bestBid = res;
       })
       .catch((err) => {
         console.log(err);
       });
+    
   }
 
   index1 = 0;
@@ -192,12 +223,6 @@ export class AuctionChatComponent implements OnInit {
       priority: false,
     },
     {
-      title: 'Имя участника',
-      compare: (a: DataBid, b: DataBid) =>
-        a.firstNameUser.localeCompare(b.firstNameUser),
-      priority: false,
-    },
-    {
       title: 'Размер инвестиций(TON)',
       compare: (a: DataBid, b: DataBid) =>
         a.investmentVolume - b.investmentVolume,
@@ -221,26 +246,33 @@ export class AuctionChatComponent implements OnInit {
 
   UpdateValidator(){
     //console.log(this.userService.getUserById(this.userId));
-    this.walletService.getWalletByUserId(this.userId).then((data) => {
+    this.walletService.getWalletByUserId(this.user.id).then((data) => {
       this.userWallet = data;
-      console.log(this.userWallet);
-      if(this.investmentVolume! <= this.userWallet.balance){
-        this.statusValidate = "success";
-        if(this.investmentVolume == null){
-          this.statusValidate = "";
+      for (const wallet of this.userWallet) {
+        if (wallet.balance > this.investmentVolume!) {
+          this.statusValidate = "success";
+          if(this.investmentVolume < this.auctionItem.investmentSize){
+            this.warningMessage = `Минимальный обьем инвестиций - ${this.auctionItem.investmentSize} TON`
+            this.statusValidate = "error"
+          }
+          else{
+            break;
+          }
+        }
+        else{ 
+          this.warningMessage = 'Недостаточно средств'
+          this.statusValidate = "error";
         }
       }
-      else{
-        this.statusValidate = "error";
-      }
+      console.log(this.userWallet);
     })
-
   }
 
   OnSendBid(){
     this.OnSendMessage();
   }
 
+  array: any;
   OnSendMessage() {
     this.chatMessages = [];
 
@@ -250,21 +282,23 @@ export class AuctionChatComponent implements OnInit {
         id: null,
         text: `Готов вложить ${this.investmentVolume} TON и получить ${this.entryPercentage}% долю в капитале компании`,
         auctionChatId: this.itemId!,
-        userId: this.userId,
+        userId: this.user.id,
         attachmentId: 0,
         timestamp: Date(),
         firstName: this.user.firstName,
         secondName: this.user.secondName
       };
-      this.webSocketService.sendMessage(this.itemId!, chatMessage.text, this.userId);
+      this.webSocketService.sendMessage(this.itemId!, chatMessage.text, this.user.id);
       console.log(chatMessage);
-      this.chatMessages.push(chatMessage);
+      //this.chatMessages.push(this.user);
+
     }
     else{
       console.log("Проверьте правильность введенных данных");
     }
 
-    this.investmentVolume = null;
+
+    this.investmentVolume = '';
     this.entryPercentage = null;
 
   }

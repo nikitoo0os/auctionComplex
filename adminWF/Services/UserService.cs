@@ -1,6 +1,8 @@
 ﻿using auctionComplex.Classes;
+using auctionComplex.Models;
 using auctionComplex.Resources;
 using auctionComplex.Utilities;
+using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using Npgsql.Schema;
 using NpgsqlTypes;
@@ -10,6 +12,7 @@ using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Runtime.Remoting.Contexts;
 
 namespace auctionComplex.Services
 {
@@ -196,6 +199,25 @@ namespace auctionComplex.Services
                 }
             }
 
+        }
+
+        internal static List<RegistrationStatistics> GetRegistrationStatistics()
+        {
+            using (var db = new AuctionComplexContext())
+            {
+                var registrationStatistics = db.Users
+                    .GroupBy(u => u.DateOfRegistration)
+                    .Select(g => new RegistrationStatistics
+                    {
+                        DateOfRegistration = g.Key.Date,
+                        RegistrationCount = g.Count()
+                    })
+                    .AsEnumerable() 
+                    .OrderBy(s => s.DateOfRegistration)
+                    .ToList();
+
+                return registrationStatistics;
+            }
         }
     }
 }

@@ -21,7 +21,8 @@ public class BidServiceImpl implements BidService {
     }
 
     @Override
-    public Bid getBestBidByAuctionItemId(Long id) {
+    public List<Bid> getBestBidByAuctionItemId(Long id) {
         return bidRepository.getBestBidByAuctionItemId(id);
     }
+
 }

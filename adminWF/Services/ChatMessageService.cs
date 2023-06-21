@@ -22,7 +22,14 @@ namespace auctionComplex.Services
         {
             using (var db = new AuctionComplexContext())
             {
-                return db.ChatMessages.Where(x => x.Id == id).ToList();
+                try {
+                    return db.ChatMessages.Where(x => x.Id == id).ToList();
+                }
+                catch(NullReferenceException e)
+                {
+                    System.Windows.Forms.MessageBox.Show(e.Message);
+                    return null;
+                }
             }
         }
     }

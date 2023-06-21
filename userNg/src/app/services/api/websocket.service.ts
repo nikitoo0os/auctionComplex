@@ -11,7 +11,7 @@ export class WebsocketService {
 
   constructor() { 
     const socket = new SockJS('http://localhost:8080/ws');
-    this.stompClient = Stomp.over(socket);
+    this.stompClient = Stomp.over(socket);  
     this.stompClient.activate();
   }
 
@@ -25,8 +25,7 @@ export class WebsocketService {
   })}
 
   sendMessage(idChat: string, text:string, userId: number){
-      this.stompClient.send("/app/hello", {}, JSON.stringify({'userId': userId, 'text': text, 'chatId': idChat}));
-
+      this.stompClient.send("/app/hello", {}, JSON.stringify({'userId': userId, 'text': text, 'auctionChatId': idChat}));
   }
 
 }

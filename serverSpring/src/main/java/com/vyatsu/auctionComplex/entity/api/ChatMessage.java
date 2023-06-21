@@ -30,8 +30,8 @@ public class ChatMessage {
     private AuctionChat auctionChat;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "\"user_id\"")
     @JsonIgnore
-    @JoinColumn(name = "\"UserId\"")
     @Getter
     @Setter
     private User user;

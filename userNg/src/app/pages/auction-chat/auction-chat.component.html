@@ -28,10 +28,9 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td>{{ 1212312 }}</td>
-                    <td>{{ "Никита" }}</td>
-                    <td>{{ 25000 }}</td>
-                    <td>{{ 12.5 }}</td>
+                    <td>{{ bestBid.id }}</td>
+                    <td>{{ bestBid.investmentVolume }}</td>
+                    <td>{{ bestBid.entryPercentage }}</td>
                   </tr>
                 </tbody>
               </nz-table>
@@ -49,7 +48,6 @@
                 <tbody>
                   <tr *ngFor="let data of sortTable.data">
                     <td>{{ data.id }}</td>
-                    <td>{{ data.firstNameUser }}</td>
                     <td>{{ data.investmentVolume }}</td>
                     <td>{{ data.entryPercentage }}</td>
                   </tr>
@@ -59,7 +57,7 @@
 
           </nz-tab>
 
-          <nz-tab nzTitle="Сделать ставку">
+          <nz-tab *ngIf="status" nzTitle="Сделать ставку">
             <div style="width: 100%; text-align: center; display: flex; flex-direction: column; justify-content: center; justify-items: center; align-items: center;">
               <form nz-form [formGroup]="bidForm">
                 <nz-form-item>
@@ -69,7 +67,7 @@
                     nzValidateStatus={{statusValidate}}
                     nzHasFeedback
                     nzValidatingTip="Проверка, подождите..."
-                    nzErrorTip="Недостаточно средств"
+                    nzErrorTip="{{warningMessage}}"
                   >
                     <input
                       nz-input
@@ -94,13 +92,14 @@
                       [(ngModel)]="entryPercentage"
                       formControlName="entryPercentage"
                       name="validating"
+                      pattern="^[1-9][0-9]*$"
                     />
                   </nz-form-control>
                 </nz-form-item>
             
                 <nz-form-item>
                   <nz-form-control>
-                    <button nz-button nzType="primary" (click)="OnSendBid()">Сделать ставку</button>
+                    <button nz-button (click)="OnSendBid()">Сделать ставку</button>
                   </nz-form-control>
                 </nz-form-item>
               </form>
@@ -123,41 +122,32 @@
       "
     >
     <ng-container *ngFor="let message of chatMessages">
-      <div *ngIf="message.userId == userId">
-        <nz-comment nzAuthor="{{ message.firstName + ' ' + message.secondName}}" >
+      <div *ngIf="message[0].userId == user.id">
+        <nz-comment nzAuthor="{{ message[0].firstName + ' ' + message[0].secondName}}" >
           <nz-avatar
             nz-comment-avatar
             nzIcon="user"
             nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
           ></nz-avatar>
           <nz-comment-content>
-            <p>{{ message.text }}</p>
+            <p>{{ message[1].text }}</p>
+          </nz-comment-content>
+        </nz-comment>
+      </div>
+      <div *ngIf="message[0].userId != user.id">
+        <nz-comment nzAuthor="{{ message[0].firstName + ' ' + message[0].secondName}}" >
+          <nz-avatar
+            nz-comment-avatar
+            nzIcon="user"
+            nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+          ></nz-avatar>
+          <nz-comment-content>
+            <p>{{ message[1].text }}</p>
           </nz-comment-content>
         </nz-comment>
       </div>
 
     </ng-container>
-      <div
-        style="
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          width: 100%;
-        "
-      >
-        <nz-comment nzAuthor="Никита Глухих" [nzDatetime]="time">
-          <nz-avatar
-            nz-comment-avatar
-            nzIcon="user"
-            nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-          ></nz-avatar>
-          <nz-comment-content>
-            <p>
-              Я готов вложить 1100 TON и получить 20% долю в капитале компании.
-            </p>
-          </nz-comment-content>
-        </nz-comment>
-      </div>
     </div>
 
     </div>

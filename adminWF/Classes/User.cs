@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -31,6 +33,9 @@ namespace auctionComplex.Classes
 
         [Column("is_verify")]
         public bool IsVerify { get; set; }
+
+        [Column("date_of_registration")]
+        public DateTimeOffset DateOfRegistration { get; set; }
 
         public virtual ICollection<Wallet> Wallets { get; } = new List<Wallet>();
         public virtual ICollection<Bid> Bids { get; } = new List<Bid>();

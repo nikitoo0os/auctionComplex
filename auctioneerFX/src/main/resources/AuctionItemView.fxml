@@ -33,7 +33,7 @@
          </font></Label>
       <Button defaultButton="true" layoutX="21.0" layoutY="699.0" mnemonicParsing="false" onAction="#updateAuctionItem" text="Сохранить изменения" />
       <Button cancelButton="true" defaultButton="true" layoutX="170.0" layoutY="699.0" mnemonicParsing="false" text="Отмена" />
-      <Button defaultButton="true" layoutX="19.0" layoutY="653.0" mnemonicParsing="false" text="Добавить файлы" />
+      <Button defaultButton="true" layoutX="19.0" layoutY="653.0" mnemonicParsing="false" text="Добавить файлы" onAction="#addAttachment"/>
       <Button fx:id="deleteBtn" defaultButton="true" layoutX="470.0" layoutY="699.0" mnemonicParsing="false" onAction="#deleteAuctionItem" text="Удалить аукцион" />
       <Label fx:id="status" layoutX="243.0" layoutY="704.0" text="Изменения зафиксированы!">
          <font>

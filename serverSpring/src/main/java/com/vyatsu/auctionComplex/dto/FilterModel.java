@@ -3,16 +3,17 @@ package com.vyatsu.auctionComplex.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-public class MessageModel {
+public class FilterModel {
 
     @Getter
     @Setter
-    private int userId;
-    @Getter
-    @Setter
-    private int auctionChatId;
+    private double investmentVolume;
 
     @Getter
     @Setter
-    private String text;
+    private String time;
+
+    @Getter
+    @Setter
+    private String category;
 }

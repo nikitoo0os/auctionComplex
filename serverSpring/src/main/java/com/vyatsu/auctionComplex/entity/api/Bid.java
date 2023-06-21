@@ -1,5 +1,6 @@
 package com.vyatsu.auctionComplex.entity.api;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,21 +25,23 @@ public class Bid {
     @Column(name = "entry_percentage", nullable = false)
     @Getter
     @Setter
-    private Integer entryPercentage;
+    private Double entryPercentage;
 
-    @Column(name = "\"timestamp\"", nullable = false)
+    @Column(name = "\"timestamp\"")
     @Getter
     @Setter
     private Instant timestamp;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "\"UserId\"")
+    @JsonIgnore
     @Getter
     @Setter
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "\"AuctionItemId\"")
+    @JsonIgnore
     @Getter
     @Setter
     private AuctionItem auctionItem;

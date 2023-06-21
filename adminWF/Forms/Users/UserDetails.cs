@@ -1,8 +1,10 @@
 ﻿using auctionComplex.Classes;
 using auctionComplex.Forms.AuctionItems;
 using auctionComplex.Forms.Bids;
+using auctionComplex.Forms.Transactions;
 using auctionComplex.Forms.Wallets;
 using auctionComplex.Services;
+using System;
 using System.Windows.Forms;
 
 namespace auctionComplex.Forms.Users
@@ -60,7 +62,8 @@ namespace auctionComplex.Forms.Users
                     Password = PasswordInput.Text,
                     Email = EmailInput.Text,
                     IsAdmin = IsAdminCB.Checked,
-                    IsVerify = IsVerifyCB.Checked
+                    IsVerify = IsVerifyCB.Checked,
+                    DateOfRegistration = new DateTimeOffset(DateTime.Now)
                 };
                 UserService.CreateUser(user);
                 Hide();
@@ -94,6 +97,13 @@ namespace auctionComplex.Forms.Users
         {
             UserService.DeleteUserById (User.Id);
             Hide();
+        }
+
+        private void TransactionBtn_Click(object sender, System.EventArgs e)
+        {
+            TransactionList transactionList = new TransactionList();
+            transactionList.SetUser(User);
+            transactionList.Show();
         }
     }
 }

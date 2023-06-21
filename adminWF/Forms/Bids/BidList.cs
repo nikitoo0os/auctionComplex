@@ -62,5 +62,11 @@ namespace auctionComplex.Forms.Bids
 
             BidsCountLabel.Text = $"Ставок найдено: {BidGrid.RowCount}";
         }
+
+        private void ResetBtn_Click(object sender, System.EventArgs e)
+        {
+            SearchInput.Text = string.Empty;
+            RefreshData();
+        }
     }
 }

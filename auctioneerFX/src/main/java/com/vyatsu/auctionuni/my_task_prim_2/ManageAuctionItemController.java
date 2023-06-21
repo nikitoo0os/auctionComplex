@@ -1,14 +1,13 @@
 package com.vyatsu.auctionuni.my_task_prim_2;
 
+import com.vyatsu.auctionuni.my_task_prim_2.entity.AuctionChat;
 import com.vyatsu.auctionuni.my_task_prim_2.entity.AuctionItem;
 import com.vyatsu.auctionuni.my_task_prim_2.entity.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
@@ -109,7 +108,6 @@ public class ManageAuctionItemController implements Initializable {
 
     public void createAuctionItem(ActionEvent event) throws URISyntaxException, IOException {
 
-
         boolean isTitle = !Objects.equals(titleItemInput.getText(), "");
         boolean isDescription = !Objects.equals(descriptionItemInput.getText(), "");
         boolean isVolumeInv = !Objects.equals(volumeInvInput.getText(), "");
@@ -136,9 +134,11 @@ public class ManageAuctionItemController implements Initializable {
         baseController.createAuctionItem(auctionItem, searchCategoryInput.getText());
 
         AuctionItem auctionItem1 = baseController.getAuctionItem(auctionItem, auctioneer.getId());
+        baseController.createAuctionChat(auctionItem1);
+        AuctionChat auctionChat = baseController.getAuctionChatByAuctionId(auctionItem1.getId());
 
         for(File file : uploadFiles){
-            baseController.createChatMessage(baseController.createAuctionChat(auctionItem1), auctioneer, "", file);
+            baseController.createChatMessage(auctionChat, auctioneer, "", file);
             System.out.println("Файл " + file + "загружен!");
         }
 
@@ -146,21 +146,21 @@ public class ManageAuctionItemController implements Initializable {
         Scene scene = new Scene(new Group());
         stage.setTitle("Мои аукционные лоты");
 
-        Stage stage1 = (Stage)firstBtn.getScene().getWindow();
+        Stage stage1 = (Stage)cancelBtn.getScene().getWindow();
         stage1.close();
 
-        Parent pane = null;
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AuctionItemsView.fxml"));
-            pane = loader.load();
-            AuctionItemsController controller = loader.getController();
-            controller.setUser(auctioneer);
-            scene.setRoot(pane);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        stage.setScene(scene);
-        stage.show();
+//        Parent pane = null;
+//        try {
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AuctionItemsView.fxml"));
+//            pane = loader.load();
+//            AuctionItemsController controller = loader.getController();
+//            controller.setUser(auctioneer);
+//            scene.setRoot(pane);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//        stage.setScene(scene);
+//        stage.show();
 
     }
 

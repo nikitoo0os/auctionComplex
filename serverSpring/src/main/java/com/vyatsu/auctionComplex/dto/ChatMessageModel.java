@@ -3,11 +3,11 @@ package com.vyatsu.auctionComplex.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-public class UserModel {
+public class ChatMessageModel {
 
     @Getter
     @Setter
-    private Long id;
+    private int id;
 
     @Getter
     @Setter
@@ -19,23 +19,13 @@ public class UserModel {
 
     @Getter
     @Setter
-    private String email;
+    private String text;
 
     @Getter
     @Setter
-    private String username;
+    private int auctionChatId;
 
     @Getter
     @Setter
-    private String password;
-
-    @Getter
-    @Setter
-    private String token;
-
-    @Getter
-    @Setter
-    private boolean isVerify;
-
-
+    private String timestamp;
 }

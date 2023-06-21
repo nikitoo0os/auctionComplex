@@ -7,6 +7,7 @@ import { AuctionItemService } from 'src/app/services/api/auction-item.service';
 import { getCookie } from 'src/app/utils/cookie-utils';
 
 interface AuctionItemData {
+  isValid: string;
   id: number;
   title: string;
   description: string;
@@ -57,17 +58,20 @@ export class AuctionItemComponent implements OnInit {
         console.log(this.auctionItem);
         this.getAttachmentData(this.auctionItem.id);
         this.endDate = new Date(this.auctionItem.endDate);
+
+        console.log(this.auctionItem.isValid);
+        if(this.auctionItem.isValid == 'completed'){
+          this.status = false;
+        }
+        else{
+          this.status = true;
+        }
+
       });
 
     setInterval(() => {
       this.deadline = this.endDate.getTime();
     }, 1000);
-
-    if (this.deadline >= 0) {
-      this.status = true;
-    } else {
-      this.status = false;
-    }
   }
 
   getAttachmentData(itemId: number) {

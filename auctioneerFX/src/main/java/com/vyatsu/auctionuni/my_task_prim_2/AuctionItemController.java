@@ -1,8 +1,6 @@
 package com.vyatsu.auctionuni.my_task_prim_2;
 
-import com.vyatsu.auctionuni.my_task_prim_2.entity.Attachment;
-import com.vyatsu.auctionuni.my_task_prim_2.entity.AuctionItem;
-import com.vyatsu.auctionuni.my_task_prim_2.entity.Bid;
+import com.vyatsu.auctionuni.my_task_prim_2.entity.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,8 +8,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -36,6 +38,7 @@ public class AuctionItemController implements Initializable {
     private BaseController baseController;
     private ObservableList<String> categoryList;
     private AuctionItemsController auctionItemsController;
+    public ObservableList<File> uploadFiles = FXCollections.observableArrayList();
 
     @FXML
     private TableColumn<Attachment, Integer> idCol;
@@ -150,5 +153,38 @@ public class AuctionItemController implements Initializable {
         Bid maxBid = baseController.getMaxBidByInvestmentVolumeByBidList(this.auctionItem.getId());
         Bid bestOfferBid = baseController.getBestOfferByBidList(this.auctionItem.getId());
         AuctionListExporter.exportToXLS(bids, this.auctionItem, minBid, maxBid, bestOfferBid);
+    }
+
+    public void addAttachment(ActionEvent event) throws URISyntaxException, IOException {
+        showFileChooser(event);
+        AuctionChat auctionChat = baseController.getAuctionChatByAuctionId(auctionItem.getId());
+        User auctioneer = auctionItem.getAuctioneer();
+        for(File file : uploadFiles){
+            baseController.createChatMessage(auctionChat, auctioneer, "", file);
+        }
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Подсказка");
+        alert.setHeaderText("Успешно!");
+        alert.setContentText("Файл добавлен!");
+        alert.showAndWait();
+    }
+
+    public void showFileChooser(ActionEvent event) {
+        Stage stage = new Stage();
+
+        FileChooser fileChooser = new FileChooser();
+
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Текстовые файлы", "*.txt; *.docx; *.doc")
+                ,new FileChooser.ExtensionFilter("Файлы табличного процессора", "*.xls; *.xlsx")
+                ,new FileChooser.ExtensionFilter("Файлы презентации", "*.pptx")
+                ,new FileChooser.ExtensionFilter("Все файлы", "*.*")
+        );
+
+        File selectedFile = fileChooser.showOpenDialog(stage);
+        if(!uploadFiles.contains(selectedFile) & selectedFile != null){
+            uploadFiles.add(selectedFile);
+        }
     }
 }

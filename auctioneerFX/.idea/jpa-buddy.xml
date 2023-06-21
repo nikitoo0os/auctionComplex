@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JpaBuddyIdeaProjectConfig" ddlActionDbType="postgres">
+    <option name="defaultUnitInitialized" value="true" />
+    <option name="renamerInitialized" value="true" />
+    <option name="sourceModelValue" value="Default" />
+    <option name="reverseEngineeringLastDbConnectionId" value="ba3ed32c-1976-4b43-becd-68dea3ee8b02" />
+    <option name="reLastEntityCreationPackage" value="src/main/java/com/vyatsu/auctionuni/my_task_prim_2/entity" />
+    <option name="newEntityIdStrategy" />
+  </component>
+</project>

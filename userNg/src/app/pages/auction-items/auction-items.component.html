@@ -1,22 +1,25 @@
 <div style="display: flex; justify-content: space-between">
   <div style="display: flex; gap: 0.5rem; flex-wrap: wrap">
     <nz-select
-      [(ngModel)]="selectedValue"
+      [(ngModel)]="selectedCategory"
+      (ngModelChange)="handleDelayedRequest()"
       nzAllowClear
       nzPlaceHolder="Категория сферы бизнеса"
-      [nzOptions]="listOfGroupOption"
+      [nzOptions]="categories"
     ></nz-select>
     <nz-select
-      [(ngModel)]="selectedValue"
+      [(ngModel)]="selectedInvestmentVolume"
+      (ngModelChange)="handleDelayedRequest()"
       nzAllowClear
       nzPlaceHolder="Суммарный объём инвестиций"
-      [nzOptions]="listOfGroupOption"
+      [nzOptions]="listOfInvestmentVolume"
     ></nz-select>
     <nz-select
-      [(ngModel)]="selectedValue"
+      [(ngModel)]="selectedTime"
+      (ngModelChange)="handleDelayedRequest()"
       nzAllowClear
       nzPlaceHolder="Дата добавления"
-      [nzOptions]="listOfGroupOption"
+      [nzOptions]="listOfTime"
     ></nz-select>
   </div>
 
@@ -64,7 +67,7 @@
         </ng-container>
       </div>
 
-      <nz-card-meta style="margin-top: 1rem" nzTitle="{{auctionItem.title}}" nzDescription="{{auctionItem.description}}"></nz-card-meta>
+      <nz-card-meta style="margin-top: 1rem; cursor: pointer;" nzTitle="{{auctionItem.title}}" nzDescription="{{auctionItem.description}}" routerLink="/item/{{auctionItem.id}}"></nz-card-meta>
     </div>
   </div>
 </nz-card>

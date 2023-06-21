@@ -18,4 +18,9 @@ public class AuctionChatServiceImpl implements AuctionChatService {
     public AuctionChat getAuctionChatByAuctionId(Long id) {
         return auctionChatRepository.getAuctionChatByAuctionItemId(id);
     }
+
+    @Override
+    public AuctionChat getAuctionChatById(Long id) {
+        return auctionChatRepository.findById(id).get();
+    }
 }

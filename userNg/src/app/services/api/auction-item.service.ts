@@ -1,12 +1,13 @@
-import { Injectable, ɵsetAllowDuplicateNgModuleIdsForTest } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuctionItemService {
+
+
   private baseUrl = 'http://localhost:8080';
   public auctionItemsData$: any;
   public auctionItemData$: any;
@@ -58,4 +59,36 @@ export class AuctionItemService {
         });
     });
   }
+
+  getAllCategories() {
+    return new Promise((resolve, reject) => {
+      axios
+        .post(`${this.baseUrl}/auctionItem/categories`)
+        .then((res) => {
+          console.log(res);
+          resolve(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+          reject(err);
+        });
+    });
+  }
+
+  getFilterAuctionItem(filter: { investmentVolume: any; time: any; category: any; }) {
+    return new Promise((resolve, reject) => {
+      axios
+        .post(`${this.baseUrl}/auctionItem/filter`, filter)
+        .then((res) => {
+          console.log(res);
+          resolve(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+          reject(err);
+        });
+    });
+  }
+
+
 }

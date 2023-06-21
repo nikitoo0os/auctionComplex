@@ -1,6 +1,4 @@
-<nz-descriptions nzTitle="Профиль участника"  nzBordered nzLayout="vertical">
-
-
+<nz-descriptions nzTitle="Профиль участника" nzBordered nzLayout="vertical">
   <nz-descriptions-item nzTitle="Статус" nzSpan="3">
     <ng-container *ngIf="user.isVerify">
       <nz-badge nzStatus="processing"><b>Аккаунт подтверждён</b></nz-badge>
@@ -8,131 +6,179 @@
     <ng-container *ngIf="!user.isVerify">
       <nz-badge nzStatus="warning"><b>Аккаунт не подтверждён</b></nz-badge>
     </ng-container>
-    
-</nz-descriptions-item>
-    <nz-descriptions-item nzTitle="Фамилия">
-        <b>{{user.secondName}}</b>
-    </nz-descriptions-item>
-    <nz-descriptions-item nzTitle="Имя">
-        <b>{{user.firstName}}</b>
-    </nz-descriptions-item>
-    <nz-descriptions-item nzTitle="Имя пользователя">
-        <b>{{user.username}}</b>
-    </nz-descriptions-item>
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="Фамилия">
+    <b>{{ user.secondName }}</b>
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="Имя">
+    <b>{{ user.firstName }}</b>
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="Имя пользователя">
+    <b>{{ user.username }}</b>
+  </nz-descriptions-item>
 </nz-descriptions>
 
 <div style="margin-top: 1.5rem">
-  <div style="display: flex;">
+  <div style="display: flex">
     <nz-descriptions nzTitle="Мои аукционы"></nz-descriptions>
 
     <button
-    nz-button
-    class="login-form-button login-form-margin"
-    [nzType]="'primary'"
-    disabled
-    routerLink="/confirmEmail"
-  >
-    Создать аукцион
-  </button>
+      nz-button
+      class="login-form-button login-form-margin"
+      [nzType]="'primary'"
+      disabled
+      routerLink="/confirmEmail"
+    >
+      Создать аукцион
+    </button>
   </div>
 
-
-    <nz-table #nestedTable [nzData]="listOfMyAuctionItems" [nzPageSize]="10">
-      <thead>
+  <nz-table #nestedTable [nzData]="listOfMyAuctionItems" [nzPageSize]="10">
+    <thead>
+      <tr>
+        <th></th>
+        <th>№</th>
+        <th>Название</th>
+        <th>Мин.объём (TON)</th>
+        <th>Начало</th>
+        <th>Конец</th>
+        <th *ngIf="!isMyItems">Аукционист</th>
+        <th>Победитель</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-template ngFor let-data [ngForOf]="nestedTable.data">
         <tr>
-          <th></th>
-          <th>№</th>
-          <th>Название</th>
-          <th>Мин.объём (TON)</th>
-          <th>Начало</th>
-          <th>Конец</th>
-          <th>Аукционист</th>
-          <th>Победитель</th>
-          <th></th>
+          <td [(nzExpand)]="data.expand"></td>
+          <td>{{ data.id }}</td>
+          <td>{{ data.title }}</td>
+          <td>{{ data.investmentSize }}</td>
+          <td>{{ data.startDate }}</td>
+          <td>{{ data.endDate }}</td>
+          <td *ngIf="!isMyItems">{{ data.auctioneerId }}</td>
+          <td *ngIf="data.winnerId != null">{{ data.winnerId }}</td>
+          <td *ngIf="data.winnerId == null">Не определён</td>
+          <td>
+            <a *ngIf="!isMyItems" routerLink="/item/{{ data.id }}">Принять участие</a>
+            <a *ngIf="isMyItems" routerLink="/item/{{ data.id }}">Подробнее</a>
+          </td>
         </tr>
-      </thead>
-      <tbody>
-        <ng-template ngFor let-data [ngForOf]="nestedTable.data">
-          <tr>
-            <td [(nzExpand)]="data.expand"></td>
-            <td>{{ data.id }}</td>
-            <td>{{ data.title }}</td>
-            <td>{{ data.investmentSize }}</td>
-            <td>{{ data.startDate }}</td>
-            <td>{{ data.endDate }}</td>
-            <td>{{ data.auctioneerId }}</td>
-            <td *ngIf="data.winnerId != null">{{ data.winnerId }}</td>
-            <td *ngIf="data.winnerId == null">Не определён</td>
-            <td>
-              <a routerLink="/item/{{data.id}}">Принять участие</a>
-            </td>
-          </tr>
-          <tr [nzExpand]="data.expand">
-            <nz-page-header-title>Последние ставки</nz-page-header-title>
-            <nz-table
-              #innerTable
-              [nzData]="listOfChildrenData"
-              nzSize="middle"
-              [nzShowPagination]="false"
-            >
-              <thead>
-                <tr>
-                  <th>Дата ставки</th>
-                  <th>Процент входа</th>
-                  <th>Объём инвестиций</th>
-                  <th>Номер участника</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let data of innerTable.data">
-                  <td>{{ data.timestamp }}</td>
-                  <td>{{ data.entryPercentage }}</td>
-                  <td>{{ data.investmentVolume }}</td>
-                  <td>{{ data.userId }}</td>
-                </tr>
-              </tbody>
-            </nz-table>
-          </tr>
-        </ng-template>
-      </tbody>
-    </nz-table>
+        <tr [nzExpand]="data.expand">
+          <nz-page-header-title>Последние ставки</nz-page-header-title>
+          <nz-table
+            #innerTable
+            [nzData]="listOfChildrenData"
+            nzSize="middle"
+            [nzShowPagination]="false"
+          >
+            <thead>
+              <tr>
+                <th>Дата ставки</th>
+                <th>Процент входа</th>
+                <th>Объём инвестиций</th>
+                <th>Номер участника</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of innerTable.data">
+                <td>{{ data.timestamp }}</td>
+                <td>{{ data.entryPercentage }}</td>
+                <td>{{ data.investmentVolume }}</td>
+                <td>{{ data.userId }}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </tr>
+      </ng-template>
+    </tbody>
+  </nz-table>
 
+  <nz-modal
+    [(nzVisible)]="isVisible"
+    nzTitle="Добавление нового кошелька"
+    (nzOnCancel)="handleCancel()"
+    (nzOnOk)="handleOk()"
+    [nzOkLoading]="isOkLoading"
+  >
+    <form
+      nz-form
+      [formGroup]="walletForm"
+      (ngSubmit)="handleOk()"
+      *nzModalContent
+      style="display: flex; flex-direction: column; justify-content: center"
+    >
+      <nz-form-item style="margin-top: 1rem">
+        <nz-form-control
+          nzValidateStatus="{{ statusValidate }}"
+          nzHasFeedback
+          nzValidatingTip="Проверка, подождите..."
+          nzErrorTip="Введен некорректный адрес TON"
+        >
+          <nz-input-group nzPrefixIcon="">
+            <input
+              type="text"
+              nz-input
+              formControlName="address"
+              (ngModelChange)="OnInputChange()"
+              placeholder="Адрес кошелька TON"
+            />
+          </nz-input-group>
+          <nz-input-group nzPrefixIcon="lock">
+            <input
+              type="text"
+              nz-input
+              formControlName="confirmCode"
+              placeholder="Код подтверждения с электронной почты"
+            />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </nz-modal>
 
-
-    <div style="margin-top: 1.5rem">
-      <div style="display: flex;">
-        <nz-descriptions nzTitle="Мои кошельки"></nz-descriptions>
-        <button
+  <div style="margin-top: 1.5rem">
+    <div style="display: flex">
+      <nz-descriptions nzTitle="Мои кошельки"></nz-descriptions>
+      <button
         nz-button
         class="login-form-button login-form-margin"
         [nzType]="'primary'"
         routerLink="/confirmEmail"
+   
+        (click)="showModal()"
       >
         Добавить кошелёк
       </button>
-      </div>
+    </div>
 
-        <nz-table #nestedTable [nzData]="listOfWallets" [nzPageSize]="3">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Адрес</th>
-              <th>Баланс(TON)</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <ng-template ngFor let-data [ngForOf]="listOfWallets">
-              <tr>
-                <td>{{ data.id }}</td>
-                <td>{{ data.address }}</td>
-                <td>{{ data.balance }}</td>
-                <td> 
-                    <span nz-icon nzType="delete" nzTheme="outline" style="cursor: pointer;"></span>
-                </td>
-              </tr>
-            </ng-template>
-          </tbody>
-        </nz-table>
-      </div>
+    <nz-table #nestedTable [nzData]="listOfWallets" [nzPageSize]="3">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Адрес</th>
+          <th>Баланс(TON)</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-template ngFor let-data [ngForOf]="listOfWallets">
+          <tr>
+            <td>{{ data.id }}</td>
+            <td>{{ data.address }}</td>
+            <td>{{ data.balance }}</td>
+            <td>
+              <span
+                nz-icon
+                nzType="delete"
+                nzTheme="outline"
+                (click)="dropWallet(data.id)"
+                style="cursor: pointer"
+              ></span>
+            </td>
+          </tr>
+        </ng-template>
+      </tbody>
+    </nz-table>
   </div>
+</div>
